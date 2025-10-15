@@ -1,0 +1,386 @@
+<!-- Save as index.html -->
+<!-- Save as index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Global Fashion — Demo</title>
+  <meta name="description" content="Fashion landing page demo — hero, product grid, quick view, cart." />
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#ff4d6d;
+      --accent-2:#ff7a9a;
+      --glass: rgba(255,255,255,0.06);
+      --shadow: 0 10px 30px rgba(2,6,23,0.6);
+      --radius: 14px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,#071029 0%, #081026 60%), var(--bg);
+      color: #e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+      padding-bottom:80px;
+    }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:40;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(7,10,20,0.55), rgba(7,10,20,0.35));
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .nav{
+      max-width:1200px; margin:0 auto; padding:18px;
+      display:flex; align-items:center; gap:18px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; font-weight:700;
+      letter-spacing:0.4px;
+    }
+    .brand .logo{
+      width:40px; height:40px; border-radius:10px;
+      background: linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:inline-grid; place-items:center; font-weight:800; color:white;
+      box-shadow: 0 4px 18px rgba(255,77,109,0.18);
+    }
+    nav{ margin-left:auto; display:flex; gap:12px; align-items:center;}
+    nav a{ color: #cfe7ff; text-decoration:none; padding:8px 12px; border-radius:8px; font-size:14px;}
+    nav a:hover{ background: rgba(255,255,255,0.02); }
+
+    /* Hero */
+    .hero{
+      max-width:1200px; margin:36px auto; display:grid;
+      grid-template-columns: 1fr 420px; gap:28px; align-items:center;
+      padding:18px;
+    }
+    .hero-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:28px; border-radius:18px; box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .eyebrow{ color:var(--accent); font-weight:700; font-size:13px; margin-bottom:8px; }
+    .hero h1{ margin:0 0 12px 0; font-size:34px; letter-spacing:-0.6px; color:#f8fbff; }
+    .lead{ color:var(--muted); margin-bottom:18px; max-width:60ch; }
+    .cta-row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap;}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px; padding:12px 16px;
+      border-radius:12px; border:0; cursor:pointer; font-weight:700; font-size:14px;
+    }
+    .btn-primary{
+      background: linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:white; box-shadow: 0 8px 30px rgba(255,77,109,0.12);
+    }
+    .btn-ghost{
+      background:transparent; color:#dbeeff; border:1px solid rgba(255,255,255,0.05);
+    }
+
+    /* Right panel product highlight */
+    .product-hero{
+      background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:20px; border-radius:18px; border:1px solid rgba(255,255,255,0.03);
+      display:flex; gap:12px; align-items:center;
+    }
+    .product-hero img{ width:140px; height:140px; object-fit:cover; border-radius:12px; }
+    .product-hero .meta{ flex:1; }
+    .price{ font-weight:800; font-size:20px; color:#fff; }
+    .tag{ background: rgba(255,255,255,0.04); padding:6px 8px; border-radius:999px; display:inline-block; font-size:12px; color:var(--muted); }
+
+    /* Filters & grid */
+    .controls{
+      max-width:1200px; margin:18px auto; padding:0 18px; display:flex; gap:12px; align-items:center; justify-content:space-between;
+    }
+    .filters{ display:flex; gap:10px; flex-wrap:wrap; }
+    .chip{ background:var(--glass); padding:8px 12px; border-radius:999px; font-size:13px; color:#dbeeff; cursor:pointer; border:1px solid rgba(255,255,255,0.02); }
+    .grid{
+      max-width:1200px; margin:8px auto; padding:12px; display:grid; gap:18px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:12px; border-radius:14px; border:1px solid rgba(255,255,255,0.03); transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover{ transform: translateY(-6px); box-shadow: 0 16px 40px rgba(2,6,23,0.6); }
+    .card img{ width:100%; height:180px; object-fit:cover; border-radius:10px; display:block; margin-bottom:10px; }
+    .card h3{ margin:0 0 6px 0; font-size:16px; color:#f8fbff;}
+    .card .muted{ color:var(--muted); font-size:13px; margin-bottom:8px;}
+    .card-footer{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .price-small{ font-weight:700; }
+
+    /* Modal / quick view */
+    .overlay{ position:fixed; inset:0; background: rgba(2,6,23,0.6); display:none; place-items:center; z-index:80; padding:18px; }
+    .modal{ width:100%; max-width:960px; background: linear-gradient(180deg,#071428, #071426); border-radius:12px; padding:18px; display:grid; gap:10px; grid-template-columns: 1fr 1fr; }
+    .modal img{ width:100%; height:380px; object-fit:cover; border-radius:10px; }
+    .close{ margin-left:auto; background:transparent; border:0; color:var(--muted); font-size:20px; cursor:pointer; }
+
+    /* Footer */
+    footer{ max-width:1200px; margin:36px auto; padding:28px; color:var(--muted); font-size:14px; display:flex; justify-content:space-between; gap:12px; align-items:center; }
+    .small{ color:var(--muted); font-size:13px; }
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{ grid-template-columns: 1fr; }
+      .modal{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="logo">GF</div>
+        <div>
+          <div style="font-size:14px;">Global Fashion</div>
+          <div style="font-size:11px;color:var(--muted)">Worldwide Apparel</div>
+        </div>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <a href="#collections">Collections</a>
+        <a href="#new">New</a>
+        <a href="#men">Men</a>
+        <a href="#women">Women</a>
+        <a href="#sale">Sale</a>
+        <a id="cartBtn" href="javascript:void(0)">Cart (<span id="cartCount">0</span>)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-card">
+        <div class="eyebrow">NEW ARRIVAL</div>
+        <h1 id="hero-title">Premium & conscious fashion for every day</h1>
+        <p class="lead">Seasonless pieces made from recycled materials — clean silhouettes, performance fabric, designed for comfort and urban life.</p>
+        <div class="cta-row">
+          <button class="btn btn-primary" onclick="scrollToGrid()">Shop Collection</button>
+          <button class="btn btn-ghost" onclick="openQuickView(sampleProduct)">Quick look</button>
+          <div style="margin-left:auto; display:flex; gap:10px; align-items:center;">
+            <div class="tag">Free shipping over $75</div>
+            <div class="tag">30-day returns</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="product-hero" aria-label="Featured product">
+        <img src="https://paragonfootwear.com/cdn/shop/products/k1012g_tan_1_1.jpg?v=1756716013&width=1920" alt="Featured sneaker" />
+        <div class="meta">
+          <div class="tag">Featured</div>
+          <h3 style="margin:8px 0 6px 0">Athletix Runner — Cloud sole</h3>
+          <div class="price">$129</div>
+          <div style="margin-top:8px; display:flex; gap:8px;">
+            <button class="btn btn-primary" onclick="addToCart(sampleProduct)">Add to cart</button>
+            <button class="btn btn-ghost" onclick="openQuickView(sampleProduct)">View</button>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="controls" id="controls">
+      <div class="filters" role="toolbar" aria-label="Filters">
+        <div class="chip" onclick="filterBy('all')">All</div>
+        <div class="chip" onclick="filterBy('men')">Men</div>
+        <div class="chip" onclick="filterBy('women')">Women</div>
+        <div class="chip" onclick="filterBy('sneakers')">Sneakers</div>
+        <div class="chip" onclick="filterBy('sale')">Sale</div>
+      </div>
+      <div>
+        <label for="search" style="font-size:13px;color:var(--muted); margin-right:6px;">Search</label>
+        <input id="search" placeholder="Search products..." style="padding:8px 10px; border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,0.03); color:#dbeeff;" oninput="applySearch(this.value)">
+      </div>
+    </section>
+
+    <section id="grid" class="grid" aria-live="polite">
+      <!-- product cards inserted by JS -->
+    </section>
+
+  </main>
+
+  <!-- Quick view modal -->
+  <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document" aria-labelledby="quick-title">
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <button class="close" aria-label="Close quick view" onclick="closeQuickView()">✕</button>
+        <img id="quickImg" src="https://placehold.co/800x600" alt="Product image" />
+      </div>
+      <div style="padding:6px 8px;">
+        <div class="tag" id="quickTag">Tag</div>
+        <h2 id="quickTitle" style="margin:8px 0 6px 0;">Product Title</h2>
+        <div id="quickPrice" class="price">$0</div>
+        <p id="quickDesc" style="color:var(--muted); margin-top:12px;">Product description goes here. Short copy that highlights features, materials and care.</p>
+
+        <div style="margin-top:16px;">
+          <label style="display:block; font-size:13px; color:var(--muted); margin-bottom:8px;">Size</label>
+          <div style="display:flex; gap:8px; margin-bottom:12px;">
+            <button class="chip" onclick="selectSize(this)">S</button>
+            <button class="chip" onclick="selectSize(this)">M</button>
+            <button class="chip" onclick="selectSize(this)">L</button>
+            <button class="chip" onclick="selectSize(this)">XL</button>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-primary" id="quickAdd">Add to cart</button>
+            <button class="btn btn-ghost" onclick="closeQuickView()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>
+      <strong>Global Fashion</strong> <div class="small">© <span id="year"></span> Global Fashion</div>
+    </div>
+    <div class="small">Made with care — demo landing page.</div>
+  </footer>
+
+<script>
+  // --- Demo product dataset (replace with real data or API) ---
+  const products = [
+    { id:1, title:'Athletix Runner', price:129, tag:'New', img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSu_sgnEJEKw35FKk2KnoZSdJBzkTTM_3zow&s', category:'men', desc:'Water-resistant, cork insole.' },
+    { id:2, title:'Luxe Knit Sweater', price:139, tag:'Sustainable', img:'data:image/jpeg;base64,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', category:'women', desc:'Soft recycled yarn, relaxed fit.' },
+    { id:3, title:'City Leather Boot', price:159, tag:'Best Seller', img:'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTFB_tEKhAdSPIh-dv8kZeEddldZAVoFtzP4nD_W3AWHrIw1X3lvB5x7IgW-Bxu_05tpB30i7FrYzM9xU3aAu5vj_3ZdyQ5zsf_ZaHoEHbqI_zLqyNWU23HFw', category:'men', desc:'Water-resistant, cork insole.' },
+    { id:4, title:'Studio Tee', price:29, tag:'Basics', img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3ifgKabELewziMjIHpAhFP3Q7JU6n6dY4Yw&s', category:'women', desc:'Everyday staple, pre-shrunk.' },
+    { id:5, title:'Trail Runner', price:119, tag:'Sale', img:'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ4iifFmG06SbsWFWRRcx9K_KOtgzFHQucr-hIhO5johELH33_eqQ-iDtPV_yZswxUYkeND5p3rOPP-BX8K_Iwp9yTsQvW8O3Ue7tw7Pos', category:'men', desc:'Grippy sole for mixed terrain.' },
+    { id:6, title:'Minimal Dress', price:189, tag:'New', img:'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSWDn838FcpuwpDZ8P_q-KkeLXwkTOzev4aiI0oN4FJjzMY4Pq_6i52k2UhBx9QJKKW0cvafcAepZBvPl4zxuGyoKULkzMHytBRnhZAAg6jZSvTB8oPkohqzA', category:'women', desc:'Sculpted silhouette, breathable fabric.' },
+    { id:7, title:'Slip-On Sneaker', price:89, tag:'Popular', img:'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSCFjnQh10xUoSmXN-EuM0tIng5k9kYDmPoLxVA_cXKH0cJ3sodEBcfkmzxHJFMv032H_P8BfITDusQXFf-nxgk0E6KO-QAaO-OO-pXMmLgzIn1VkE4bCGRAQ', category:'women', desc:'Lightweight, machine washable.' },
+    { id:8, title:'Performance Short', price:39, tag:'Active', img:'data:image/jpeg;base64,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', category:'men', desc:'Quick-dry fabric with zip pocket.' }
+  ];
+
+  // DOM refs
+  const grid = document.getElementById('grid');
+  const overlay = document.getElementById('overlay');
+  const quickImg = document.getElementById('quickImg');
+  const quickTitle = document.getElementById('quickTitle');
+  const quickPrice = document.getElementById('quickPrice');
+  const quickDesc = document.getElementById('quickDesc');
+  const quickTag = document.getElementById('quickTag');
+  const quickAdd = document.getElementById('quickAdd');
+  const cartCount = document.getElementById('cartCount');
+
+  // Simple in-memory cart
+  let cart = [];
+  let currentQuick = null;
+  const sampleProduct = products[0];
+
+  // Render product cards
+  function renderGrid(list = products){
+    grid.innerHTML = '';
+    list.forEach(p=>{
+      const el = document.createElement('article');
+      el.className = 'card';
+      el.setAttribute('tabindex','0');
+      el.innerHTML = `
+        <img src="${p.img}" alt="${escapeHtml(p.title)}">
+        <h3>${escapeHtml(p.title)}</h3>
+        <div class="muted">${escapeHtml(p.tag)}</div>
+        <div class="card-footer">
+          <div class="price-small">$${Number(p.price).toFixed(2)}</div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-ghost" onclick="openQuickViewById(${p.id})">View</button>
+            <button class="btn btn-primary" onclick="addToCartById(${p.id})">Add</button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(el);
+    });
+  }
+
+  // Filters and search
+  function filterBy(cat){
+    if(cat === 'all') return renderGrid(products);
+    const filtered = products.filter(p=>p.category === cat || p.tag.toLowerCase() === cat);
+    renderGrid(filtered);
+  }
+
+  function applySearch(q){
+    const text = q.trim().toLowerCase();
+    if(!text) return renderGrid(products);
+    const res = products.filter(p => p.title.toLowerCase().includes(text) || p.desc.toLowerCase().includes(text) || p.tag.toLowerCase().includes(text));
+    renderGrid(res);
+  }
+
+  // Quick view
+  function openQuickView(prod){
+    currentQuick = prod;
+    quickImg.src = prod.img;
+    quickTitle.textContent = prod.title;
+    quickPrice.textContent = `$${Number(prod.price).toFixed(2)}`;
+    quickDesc.textContent = prod.desc;
+    quickTag.textContent = prod.tag;
+    quickAdd.onclick = ()=>{ addToCart(prod); closeQuickView(); };
+    overlay.style.display = 'grid';
+    overlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function openQuickViewById(id){
+    const p = products.find(x=>x.id===id);
+    if(p) openQuickView(p);
+  }
+  function closeQuickView(){
+    overlay.style.display = 'none';
+    overlay.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    currentQuick = null;
+  }
+
+  function selectSize(btn){
+    // small demo — highlight selection
+    document.querySelectorAll('.modal .chip').forEach(b => b.style.outline = 'none');
+    btn.style.outline = '2px solid rgba(255,255,255,0.08)';
+  }
+
+  // Cart functions
+  function addToCart(prod){
+    const existing = cart.find(i=>i.id===prod.id);
+    if(existing) existing.qty++;
+    else cart.push({ ...prod, qty:1 });
+    updateCartUI();
+    flashAdded();
+  }
+  function addToCartById(id){ const p = products.find(x=>x.id===id); if(p) addToCart(p); }
+  function updateCartUI(){
+    const total = cart.reduce((s,i)=>s + i.qty, 0);
+    cartCount.textContent = total;
+  }
+
+  function flashAdded(){
+    const btn = document.querySelector('.brand');
+    btn.animate([{ transform:'scale(1)' }, { transform:'scale(1.03)' }, { transform:'scale(1)' }], { duration:380 });
+  }
+
+  // Utility
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; });}
+
+  function scrollToGrid(){ document.getElementById('grid').scrollIntoView({behavior:'smooth', block:'start'}); }
+
+  // init
+  document.getElementById('year').textContent = new Date().getFullYear();
+  renderGrid();
+
+  // keyboard & overlay close
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape') closeQuickView();
+  });
+  overlay.addEventListener('click', (e)=>{
+    if(e.target === overlay) closeQuickView();
+  });
+
+  // small accessibility helper: trap focus to modal when open (simple)
+  document.addEventListener('focusin', (e)=>{
+    if(overlay.style.display === 'grid' && !overlay.contains(e.target)){
+      overlay.querySelector('.modal').focus();
+      e.preventDefault();
+    }
+  });
+</script>
+
+</body>
+</html>
